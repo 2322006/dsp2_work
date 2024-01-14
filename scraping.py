@@ -15,12 +15,14 @@ for row in soup.find_all('tr', class_='mtx'): # "soup"のHTMLコードから、"
     items = row.find_all('td') # 各行内の各tdタグを取得
 
     if len(items) >= 9:  # 表のセルが少なくとも9つあることを確認
+        cell1 = items[0].text # セル1のデータをそのまま取得
         cell2 = items[1].text # セル2のデータをそのまま取得
         cell5 = items[4].text # セル5のデータをそのまま取得
         cell8 = items[7].text # セル8のデータをそのまま取得
         
         # 辞書を作成
         d = {
+            'time': cell1, # 気圧のデータ
             'pressure': cell2, # 気圧のデータ
             'temperature': cell5, # 温度のデータ
             'humidity': cell8, # 湿度のデータ
@@ -45,7 +47,7 @@ cur.execute('DROP TABLE IF EXISTS weather_db;')
 # 実行したいSQLを用意する
 # テーブルを作成するSQL
 # CREATE TABLE テーブル名（カラム名 型，...）;
-sql_create_table = 'CREATE TABLE weather_db(pressure int, temperature int, humidity int);'
+sql_create_table = 'CREATE TABLE weather_db(time INTEGER, pressure int, temperature int, humidity int);'
 
 # SQLを実行する
 cur.execute(sql_create_table)
@@ -53,9 +55,9 @@ cur.execute(sql_create_table)
 # d_listの情報をデータベースに追加する
 for item in d_list:
     cur.execute('''
-        INSERT INTO weather_db (pressure, temperature, humidity)
-        VALUES (?, ?, ?)
-    ''', (item['pressure'], item['temperature'], item['humidity']))
+        INSERT INTO weather_db (time, pressure, temperature, humidity)
+        VALUES (?, ?, ?, ?)
+    ''', (item['time'], item['pressure'], item['temperature'], item['humidity']))
 
 # 必要があればコミットする（データ変更等があった場合）
 # 今回は念の為コミットしておく
