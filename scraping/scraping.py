@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup # HTMLコード解析に使用
 import requests # HTMLコード取得に使用
 import time # サーバーに負荷をかけないようにするために使用
 
-url = 'https://www.data.jma.go.jp/obd/stats/etrn/view/hourly_s1.php?prec_no=44&block_no=47662&year=2024&month=1&day=12&view=p1' # スクレイピングするURLを定義
+url = 'https://www.data.jma.go.jp/obd/stats/etrn/view/monthly_s1.php?prec_no=44&block_no=47662&year=2023&month=01&day=12&view=p1' # スクレイピングするURLを定義
 d_list =[] # 空のリストを作成
 r = requests.get(url) # "requests"ライブラリを使用して、指定されたURLに対してHTTP GETリクエストを送信し、レスポンスを変数"r"に格納
 r.encoding = 'utf-8' # 文字化けしていたため、変数"r"を'utf-8'にエンコーディング
