@@ -33,7 +33,7 @@ for row in soup.find_all('tr', class_='mtx'): # "soup"のHTMLコードから、"
 path = '/Users/macuser/Desktop/dsp2_work/' # ローカル（自分のMac）
 
 # DBファイル名
-db_name = 'weather_db.sqlite'
+db_name = 'db.sqlite'
 
 # DBに接続する（指定したDBファイル存在しない場合は，新規に作成される）
 con = sqlite3.connect(path + db_name)
@@ -42,12 +42,12 @@ con = sqlite3.connect(path + db_name)
 cur = con.cursor()
 
 # 既存のテーブルがある場合は削除する（エラー解消のため）
-cur.execute('DROP TABLE IF EXISTS weather_db;')
+cur.execute('DROP TABLE IF EXISTS weather_data;')
 
 # 実行したいSQLを用意する
 # テーブルを作成するSQL
 # CREATE TABLE テーブル名（カラム名 型，...）;
-sql_create_table = 'CREATE TABLE weather_db(time INTEGER, pressure int, temperature int, humidity int);'
+sql_create_table = 'CREATE TABLE weather_data(time INTEGER, pressure int, temperature int, humidity int);'
 
 # SQLを実行する
 cur.execute(sql_create_table)
@@ -55,7 +55,7 @@ cur.execute(sql_create_table)
 # d_listの情報をデータベースに追加する
 for item in d_list:
     cur.execute('''
-        INSERT INTO weather_db (time, pressure, temperature, humidity)
+        INSERT INTO weather_data (time, pressure, temperature, humidity)
         VALUES (?, ?, ?, ?)
     ''', (item['time'], item['pressure'], item['temperature'], item['humidity']))
 
