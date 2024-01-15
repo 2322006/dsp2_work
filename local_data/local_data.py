@@ -4,7 +4,7 @@ import sqlite3
 path = '/Users/macuser/Desktop/dsp2_work/' # ローカル（自分のMac）
 
 # DBファイル名
-db_name = 'weather_db.sqlite'
+db_name = 'db.sqlite'
 
 # DBに接続する（指定したDBファイル存在しない場合は，新規に作成される）
 con = sqlite3.connect(path + db_name)
@@ -13,23 +13,23 @@ con = sqlite3.connect(path + db_name)
 cur = con.cursor()
 
 # 既存のテーブルがあれば削除する
-cur.execute('DROP TABLE IF EXISTS weather_local_db;')
+cur.execute('DROP TABLE IF EXISTS local_data;')
 
 # 実行したいSQLを用意する
 # テーブルを作成するSQL
 # CREATE TABLE テーブル名（カラム名 型，...）;
-sql_create_table_weather_local_db = 'CREATE TABLE weather_local_db(time INTEGER, pressure_local int, temperature_local int, humidity_local int);'
+sql_create_table_local_data = 'CREATE TABLE local_data(number_of_steps INTEGER, pressure_local int, temperature_local int, humidity_local int);'
 
 # SQLを実行する
-cur.execute(sql_create_table_weather_local_db)
+cur.execute(sql_create_table_local_data)
 
 # SQLを用意
 # データを挿入するSQL
 # INSERT INTO テーブル名 VALUES (列に対応したデータをカンマ区切りで);
-sql_insert_many = "INSERT INTO weather_local_db VALUES (?, ?, ?, ?);"
+sql_insert_many = "INSERT INTO local_data VALUES (?, ?, ?, ?);"
 
 # データをリストで用意する
-weather_local_db_list = [
+local_data_list = [
     (1, 0, 0, 0),
     (2, 0, 0, 0),
     (3, 0, 0, 0),
@@ -57,7 +57,7 @@ weather_local_db_list = [
 ]
 
 # SQLを実行
-cur.executemany(sql_insert_many, weather_local_db_list)
+cur.executemany(sql_insert_many, local_data_list)
 
 # コミット処理（データ操作を反映させる）
 con.commit()
