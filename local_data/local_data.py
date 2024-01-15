@@ -18,7 +18,7 @@ cur.execute('DROP TABLE IF EXISTS local_data;')
 # 実行したいSQLを用意する
 # テーブルを作成するSQL
 # CREATE TABLE テーブル名（カラム名 型，...）;
-sql_create_table_local_data = 'CREATE TABLE local_data(number_of_steps INTEGER, pressure_local int, temperature_local int, humidity_local int);'
+sql_create_table_local_data = 'CREATE TABLE local_data(number_of_steps INTEGER, water_price INTEGER, gas_price INTEGER, sleeping_time INTEGER);'
 
 # SQLを実行する
 cur.execute(sql_create_table_local_data)
@@ -30,30 +30,18 @@ sql_insert_many = "INSERT INTO local_data VALUES (?, ?, ?, ?);"
 
 # データをリストで用意する
 local_data_list = [
-    (1, 0, 0, 0),
-    (2, 0, 0, 0),
-    (3, 0, 0, 0),
-    (4, 0, 0, 0),
-    (5, 0, 0, 0),
-    (6, 0, 0, 0),
-    (7, 0, 0, 0),
-    (8, 0, 0, 0),
-    (9, 0, 0, 0),
-    (10, 0, 0, 0),
-    (11, 0, 0, 0),
-    (12, 0, 0, 0),
-    (13, 0, 0, 0),
-    (14, 0, 0, 0),
-    (15, 0, 0, 0),
-    (16, 0, 0, 0),
-    (17, 0, 0, 0),
-    (18, 0, 0, 0),
-    (19, 0, 0, 0),
-    (20, 0, 0, 0),
-    (21, 0, 0, 0),
-    (22, 0, 0, 0),
-    (23, 0, 0, 0),
-    (24, 0, 0, 0),
+    (3715, 4243, 7957, 380),
+    (2463, 4141, 6089, 392),
+    (9700, 3016, 4149, 304),
+    (6501, 2085, 2335, 322),
+    (5639, 2563, 6367, 349),
+    (8537, 3119, 6164, 365),
+    (5539, 1837, 6947, 343),
+    (8734, 2274, 4376, 324),
+    (11962, 2200, 2556, 345),
+    (13416, 2697, 2715, 323),
+    (7952, 3168, 3449, 324),
+    (6647, 3823, 7437, 394),
 ]
 
 # SQLを実行
