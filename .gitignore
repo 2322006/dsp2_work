@@ -11,6 +11,6 @@
 # ＊を使うと、任意の文字列という意味になる
 *.xlsx
 
-weather_db.sqlite
+db.sqlite
 
 2322006伊藤政治_最終課題発表スライド.pptx
