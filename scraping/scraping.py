@@ -22,7 +22,7 @@ for row in soup.find_all('tr', class_='mtx'): # "soup"のHTMLコードから、"
         
         # 辞書を作成
         d = {
-            'time': cell1, # 気圧のデータ
+            'month': cell1, # 月のデータ
             'pressure': cell2, # 気圧のデータ
             'temperature': cell5, # 温度のデータ
             'humidity': cell8, # 湿度のデータ
@@ -47,7 +47,7 @@ cur.execute('DROP TABLE IF EXISTS weather_data;')
 # 実行したいSQLを用意する
 # テーブルを作成するSQL
 # CREATE TABLE テーブル名（カラム名 型，...）;
-sql_create_table = 'CREATE TABLE weather_data(time INTEGER, pressure int, temperature int, humidity int);'
+sql_create_table = 'CREATE TABLE weather_data(month INTEGER, pressure int, temperature int, humidity int);'
 
 # SQLを実行する
 cur.execute(sql_create_table)
@@ -55,9 +55,9 @@ cur.execute(sql_create_table)
 # d_listの情報をデータベースに追加する
 for item in d_list:
     cur.execute('''
-        INSERT INTO weather_data (time, pressure, temperature, humidity)
+        INSERT INTO weather_data (month, pressure, temperature, humidity)
         VALUES (?, ?, ?, ?)
-    ''', (item['time'], item['pressure'], item['temperature'], item['humidity']))
+    ''', (item['month'], item['pressure'], item['temperature'], item['humidity']))
 
 # 必要があればコミットする（データ変更等があった場合）
 # 今回は念の為コミットしておく
