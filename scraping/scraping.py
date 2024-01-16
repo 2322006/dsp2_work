@@ -19,13 +19,19 @@ for row in soup.find_all('tr', class_='mtx'): # "soup"のHTMLコードから、"
         cell2 = items[1].text # セル2のデータをそのまま取得
         cell5 = items[4].text # セル5のデータをそのまま取得
         cell8 = items[7].text # セル8のデータをそのまま取得
-        
+        cell13 = items[12].text # セル13のデータをそのまま取得
+        cell15 = items[14].text # セル15のデータをそのまま取得
+        cell20 = items[20].text # セル20のデータをそのまま取得
+
         # 辞書を作成
         d = {
             'month': cell1, # 月のデータ
             'pressure': cell2, # 気圧のデータ
-            'temperature': cell5, # 温度のデータ
-            'humidity': cell8, # 湿度のデータ
+            'precipitation': cell5, # 降水量（日）のデータ
+            'temperature': cell8, # 温度のデータ
+            'humidity': cell13, # 湿度のデータ
+            'wind_speed': cell15, # 風速のデータ
+            'daylight_hours': cell20, # 日照時間（h）のデータ
         }
         d_list.append(d) # 最後に繰り返し最初に作成したd_listに追加する
 
@@ -47,7 +53,7 @@ cur.execute('DROP TABLE IF EXISTS weather_data;')
 # 実行したいSQLを用意する
 # テーブルを作成するSQL
 # CREATE TABLE テーブル名（カラム名 型，...）;
-sql_create_table = 'CREATE TABLE weather_data(month INTEGER, pressure int, temperature int, humidity int);'
+sql_create_table = 'CREATE TABLE weather_data(month INTEGER, pressure int, precipitation int, temperature int, humidity INTEGER, wind_speed int, daylight_hours int);'
 
 # SQLを実行する
 cur.execute(sql_create_table)
@@ -55,9 +61,9 @@ cur.execute(sql_create_table)
 # d_listの情報をデータベースに追加する
 for item in d_list:
     cur.execute('''
-        INSERT INTO weather_data (month, pressure, temperature, humidity)
-        VALUES (?, ?, ?, ?)
-    ''', (item['month'], item['pressure'], item['temperature'], item['humidity']))
+        INSERT INTO weather_data (month, pressure, precipitation, temperature, humidity, wind_speed, daylight_hours)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (item['month'], item['pressure'], item['precipitation'], item['temperature'], item['humidity'], item['wind_speed'], item['daylight_hours']))
 
 # 必要があればコミットする（データ変更等があった場合）
 # 今回は念の為コミットしておく
